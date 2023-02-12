@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: teal;
+}
+
+#app-windows {
+  display: flex;
+  width: 100%;
+  max-height: 100vh;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+  background: transparent;
+}
+#app-windows .window {
+  display: block;
+  width: 40%;
+  padding: 0;
+  max-height: 50.6rem;
+  box-shadow: 2px 2px 5px black;
+  border: 1px solid black;
+  border-top: none;
+}
+#app-windows .window header {
+  display: flex;
+  height: 3.6em;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+  font-style: italic;
+}
+#app-windows #editor,
+#app-windows #preview {
+  margin: 0;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: calc(100vh - 6rem);
+  max-height: calc(100vh - 6rem);
+  padding: 0.4rem;
+  outline: none;
+  border: none;
+  overflow-y: scroll;
+}
+#app-windows #preview {
+  margin-bottom: 0.4em;
+}
+
+pre {
+  background: grey;
+  padding: 1em;
+}
+
+blockquote {
+  margin-left: 1em;
+}
+
+@media (max-width: 1200px) {
+  #app-windows {
+    flex-direction: column;
+    align-items: center;
+    max-height: calc(200vh + 3rem);
+  }
+  #app-windows .window {
+    display: block;
+    width: 60%;
+    min-width: 315px;
+    height: 28%;
+    padding: 0;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
