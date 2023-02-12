@@ -64,7 +64,7 @@
  [END]
 */
 
-$("document").ready(() => {
+$(() => {
 
     const setAttr = (target, attrName, newAttrVal) => {
         $(target).attr(attrName, newAttrVal);
@@ -97,7 +97,7 @@ $("document").ready(() => {
         };
         const updatePreview = () => {
 
-            marked.setOptions({ breaks: true })
+            marked.setOptions({ breaks: true });
             $("#preview").html(marked.parse($("#editor").val()));
 
             updateBlockquotes();
@@ -170,7 +170,6 @@ $("document").ready(() => {
 
 
 
-        applyClasses("#app-windows", "");
         setupAppWindow("preview");
         setupAppWindow("editor", updatePreview);
         setInitialEditorText();
