@@ -59,125 +59,124 @@
              list item.
     
  Emedded Images:
-    ![altText](someImageAddress)
+    /![altText](someImageAddress)
     
  [END]
 */
 
 $(() => {
 
-    const setAttr = (target, attrName, newAttrVal) => {
-        $(target).attr(attrName, newAttrVal);
+  const setAttr = (target, attrName, newAttrVal) => {
+    $(target).attr(attrName, newAttrVal);
+  }
+
+  const setProperty = (target, propName, newPropVal) => {
+    $(target).css(propName, newPropVal);
+  }
+  const applyClasses = (target, newClasses = "") => {
+    setAttr(target, "class", newClasses);
+  }
+
+  const setupAppWindows = () => {
+
+    const updateBlockquotes = () => {
+      applyClasses(
+        "blockquote",
+        "blockquote"
+      )
+    }
+    const updateImages = () => {
+      applyClasses(
+        "img",
+        "img-thumbnail rounded d-block mx-auto text-dark"
+      )
+      setProperty("img", "max-width", "80%");
+    };
+    const updateTables = () => {
+      applyClasses("table", "table table-striped table-light");
+    };
+    const updatePreview = () => {
+
+      marked.setOptions({ breaks: true });
+      $("#preview").html(marked.parse($("#editor").val()));
+
+      updateBlockquotes();
+      updateImages();
+      updateTables();
+
+    };
+
+    const setupAppWindow = (windowName, keyupCallback = {}) => {
+
+      applyClasses(`#` + windowName + "-window", "window bg-dark rounded");
+      applyClasses(`#` + windowName + "-header", "bg-primary text-light rounded");
+      applyClasses(`#` + windowName, "bg-dark text-light");
+
+      $("#".concat(windowName)).keyup(keyupCallback);
     }
 
-    const setProperty = (target, propName, newPropVal) => {
-        $(target).css(propName, newPropVal);
-    }
-    const applyClasses = (target, newClasses = "") => {
-        setAttr(target, "class", newClasses);
-    }
+    const getInitialEditorText = () => {
 
-    const setupAppWindows = () => {
+      return (
+        "# Top Level Heading\r" +
+        "---\r" +
 
-        const updateBlockquotes = () => {
-            applyClasses(
-                "blockquote",
-                "blockquote"
-            )
-        }
-        const updateImages = () => {
-            applyClasses(
-                "img",
-                "img-thumbnail rounded d-block mx-auto text-dark"
-            )
-            setProperty("img", "max-width", "80%");
-        };
-        const updateTables = () => {
-            applyClasses("table", "table table-striped table-light");
-        };
-        const updatePreview = () => {
+        "![Nature](https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shaqi_jrvej.jpg/1200px-Shaqi_jrvej.jpg)\r" +
 
-            marked.setOptions({ breaks: true });
-            $("#preview").html(marked.parse($("#editor").val()));
+        "## Section 1 Heading\r" +
 
-            updateBlockquotes();
-            updateImages();
-            updateTables();
+        '- This is a level 0 unordered list\r' +
+        `  - This is a level 1 unordered list\r` +
+        `    - This is a level 2 unordered list\r` +
+        `      - This is a level 3 unordered list\r` +
+        `      - [END]\r` +
+        `    - [END]\r` +
+        `  - [END]\r` +
+        '- This is bolded text: **some_text**\r' +
+        '- This is a link: [someLink](#)\r' +
+        '- [END]\r' +
 
-        };
+        "## Section 2 Heading\r" +
 
-        const setupAppWindow = (windowName, keyupCallback = {}) => {
+        '1. This is a level 0 ordered list\r' +
+        `   1. This is a level 1 ordered list\r` +
+        `      1. This is a level 2 ordered list\r` +
+        `         1. This is a level 3 ordered list\r` +
+        `         5. [END]\r` +
+        `      7. [END]\r` +
+        `   8. [END]\r` +
+        '4. This is a blockquote: \r' +
+        '> Blockquote\r' +
+        '4. [END]\r' +
 
-            applyClasses(`#` + windowName + "-window", "window bg-dark rounded");
-            applyClasses(`#` + windowName + "-header", "bg-primary text-light rounded");
-            applyClasses(`#` + windowName, "bg-dark text-light");
+        "## Section 3 Heading\r" +
 
-            if (keyupCallback !== {})
-                $("#".concat(windowName)).keyup(keyupCallback);
-        }
+        '- This is inline code: `<div></div>` \r' +
+        '- This is multi-line code: \r' +
+        " ```\r" +
+        "function printMessage() {\r   console.log(\"Hello World\"); \r}\r" +
+        " ```\r" +
+        '- [END]\n' +
 
-        const getInitialEditorText = () => {
+        "## END"
+      );
 
-            return (
-                "# Top Level Heading\r" +
-                "---\r" +
-
-                "![Nature](https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shaqi_jrvej.jpg/1200px-Shaqi_jrvej.jpg)\r" +
-
-                "## Section 1 Heading\r" +
-
-                '- This is a level 0 unordered list\r' +
-                `  - This is a level 1 unordered list\r` +
-                `    - This is a level 2 unordered list\r` +
-                `      - This is a level 3 unordered list\r` +
-                `      - [END]\r` +
-                `    - [END]\r` +
-                `  - [END]\r` +
-                '- This is bolded text: **some_text**\r' +
-                '- This is a link: [someLink](#)\r' +
-                '- [END]\r' +
-
-                "## Section 2 Heading\r" +
-
-                '1. This is a level 0 ordered list\r' +
-                `   1. This is a level 1 ordered list\r` +
-                `      1. This is a level 2 ordered list\r` +
-                `         1. This is a level 3 ordered list\r` +
-                `         5. [END]\r` +
-                `      7. [END]\r` +
-                `   8. [END]\r` +
-                '4. This is a blockquote: \r' +
-                '> Blockquote\r' +
-                '4. [END]\r' +
-
-                "## Section 3 Heading\r" +
-
-                '- This is inline code: `<div></div>` \r' +
-                '- This is multi-line code: \r' +
-                " ```\r" +
-                "function printMessage() {\r   console.log(\"Hello World\"); \r}\r" +
-                " ```\r" +
-                '- [END]\n' +
-
-                "## END"
-            );
-
-        };
-        const setInitialEditorText = () => {
-            $("#editor").val(getInitialEditorText());
-            updatePreview();
-        };
+    };
+    const setInitialEditorText = () => {
+      $("#editor").val(getInitialEditorText());
+      updatePreview();
+    };
 
 
 
-        setupAppWindow("preview");
-        setupAppWindow("editor", updatePreview);
-        setInitialEditorText();
+    setupAppWindow("preview");
+    setupAppWindow("editor", updatePreview);
+    setInitialEditorText();
 
-    }
+  }
 
 
 
-    setupAppWindows();
+  setupAppWindows();
 
 });
